@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./Docker/application
+      dockerfile: Dockerfile
+    container_name: symfony
+    restart: always
+    working_dir: /App
+    volumes:
+      - ./application:/App
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 8000:80
+    volumes:
+      - ./application:/App
+      - ./Docker/Nginx:/etc/nginx/conf.d
