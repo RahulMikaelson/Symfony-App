@@ -1,12 +1,10 @@
 version: '3.8'
-
 services:
   app:
     build:
       context: ./Docker/application
       dockerfile: Dockerfile
     container_name: symfony
-    restart: always
     working_dir: /App
     volumes:
       - ./application:/App
@@ -19,3 +17,13 @@ services:
     volumes:
       - ./application:/App
       - ./Docker/Nginx:/etc/nginx/conf.d
+  mongodb:
+    build: ./Docker/Database
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - ./Docker/Database/data:/data/db:rw
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
